@@ -19,6 +19,71 @@ Cozystack deploys applications in two complementary ways:
     The chart’s `appVersion` pin tracks the latest stable upstream release, keeping deployments secure and up‑to‑date.
 
 
+## Adding External Applications
+
+Cozystack administrators can add external sources of managed applications in addition to the standard application catalog.
+
+Follow these steps to define a managed application package and add it to Cozystack:
+
+1.  Create a repository with the application package sources.
+
+    See example: https://github.com/klinch0/cozy-exrta-apps
+
+    - `./apps` - Helm charts for applications that can be installed from the dashboard.
+    - `./charts` - Helm charts for system applications that will be installed permanently.
+    - `./cozystackresourcedefinitions` - Manifests with `CozystackResourceDefinition` for registering new resources in the Kubernetes API.
+    - `./marketplacepanels` - Manifests with `MarketplacePanel` for creating application entries in the dashboard.
+    - `./system` - `HelmReleases` for system applications and namespaces.
+
+    For reference, see the FluxCD docs:
+
+    - [HelmRelease](https://fluxcd.io/flux/components/helm/helmreleases/)
+    - [GitRepository](https://fluxcd.io/flux/components/source/gitrepositories/)
+    - [Kustomization](https://fluxcd.io/flux/components/kustomize/kustomizations/)
+
+
+2.  Create resources `GitRepository` and `Kustomization`.
+
+    Create the following resources in your Cozystack cluster.
+    First, create a manifest file, such as `init-my-app.yaml`, by this example:
+
+    ```yaml
+    apiVersion: source.toolkit.fluxcd.io/v1
+    kind: GitRepository
+    metadata:
+      name: external-apps
+      namespace: cozy-public
+    spec:
+      interval: 1m0s
+      ref:
+        branch: main
+      timeout: 60s
+      url: https://github.com/<org>/<your-repo-name>.git
+    ---
+    apiVersion: kustomize.toolkit.fluxcd.io/v1
+    kind: Kustomization
+    metadata:
+      name: external-apps
+      namespace: cozy-public
+    spec:
+      force: false
+      interval: 10m0s
+      path: ./
+      prune: true
+      sourceRef:
+        kind: GitRepository
+        name: external-apps
+    ```
+
+    Next, apply the manifest:
+
+    ```bash
+    kubectl apply -f init-extra.yaml
+    ```
+
+After applying the manifest, open your application catalog to confirm that the application is available.
+
+
 ## Tenant Kubernetes Clusters
 
 Cozystack deploys and manages Kubernetes clusters as standalone applications within each tenant’s isolated environment.
