@@ -1,6 +1,6 @@
 ---
-title: "4. Deploy Managed Applications, VMs, and tenant Kubernetes cluster"
-linkTitle: "4. Deploy Applications"
+title: "5. Deploy Managed Applications, VMs, and tenant Kubernetes cluster"
+linkTitle: "5. Deploy Applications"
 description: "Start using Cozystack: deploy a virtual machine, managed application, and a tenant Kubernetes cluster."
 weight: 50
 ---

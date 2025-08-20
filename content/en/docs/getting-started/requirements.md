@@ -1,9 +1,18 @@
 ---
-title: "0. Requirements and Toolchain"
-linkTitle: "0. Requirements"
-description: "Prepare hardware and install the toolchain."
+title: "Requirements and Toolchain"
+linkTitle: "Requirements"
+description: "Prepare infrastructure and install the toolchain."
 weight: 1
 ---
+
+## Navigation
+
+1.  [Prepare infrastructure and tools]({{% ref "requirements" %}})
+2.  [Install Talos Linux]({{% ref "install-talos" %}})
+3.  [Install and bootstrap a Kubernetes cluster]({{% ref "install-kubernetes" %}})
+4.  [Install and configureCozystack]({{% ref "install-cozystack" %}})
+5.  [Create a tenant for users and teams]({{% ref "create-tenant" %}})
+6.  [Deploy managed applications]({{% ref "deploy-app" %}})
 
 ## Toolchain
 
@@ -29,14 +38,13 @@ To run this tutorial, you will need the following setup:
     -   HDD1: 32GiB<br>Primary disk, used for Talos Linux, etcd storage, and downloaded images.
     -   HDD2: 100GiB<br>Secondary disk, used for user application data.
 -   OS:
-    -   For `kexec` installation: any Linux distribution able to run `kexec`, for example, Ubuntu.<br>
-        Using `kexec` is a simple way to boot Talos Linux, optimal for this tutorial, but restricted on VMs by some cloud providers.
-    -   None, for [other installation methods]({{% ref "/docs/install/talos" %}}). 
+    -   Any Linux distribution, for example, Ubuntu.<br>
+    -   There are [other installation methods]({{% ref "/docs/install/talos" %}}) which require either any Linux or no OS at all to start. 
 -   Networking:
     -   Routable FQDN domain.<br>If you don't have one, you can use [nip.io](https://nip.io/) with dash notation
     -   Located in the same L2 network segment.
 -   Anti-spoofing disabled.<br>
-    It is required for MetalLB, the load balancer used in Cozystack
+    It is required for MetalLB, the load balancer used in Cozystack.
 -   If using virtual machines, there are extra requirements:
     -   CPU passthrough enabled and CPU model set to `host` in the hypervisor settings.
     -   Nested virtualization enabled.<br>
